@@ -38,8 +38,7 @@ class Fraction {
 	simplify() {
 
 		//init variables for later
-		let i = 0,
-			prime = primes[i];
+		let i = 0, prime = primes[i];
 		
 		//while the prime is smaller than the numerator and denominator
 		//and also if we have ran out of primes
