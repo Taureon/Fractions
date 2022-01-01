@@ -64,6 +64,97 @@ class Fraction {
 
 	//return fraction as a decimal number
 	normalize() { return this.wholes + this.numerator / this.denominator; }
+
+	//add a fraction to it
+	add(summand) {
+		if (typeof summand === "number") {
+			
+			let wasMixed = this.isMixed();
+			
+			this.wholes += summand;
+			
+			if (!wasMixed) this.unmix();
+
+		} else {
+
+			this.wholes += summand.wholes;
+			this.numerator += summand.numerator;
+			this.denominator += summand.denominator;
+
+		}
+	}
+
+	//subtract a fraction from it
+	subtract(subtrahend) {
+		if (typeof subtrahend === "number") {
+			
+			let wasMixed = this.isMixed();
+			
+			this.wholes -= subtrahend;
+			
+			if (!wasMixed) this.unmix();
+
+		} else {
+
+			this.wholes -= subtrahend.wholes;
+			this.numerator -= subtrahend.numerator;
+			this.denominator -= subtrahend.denominator;
+
+		}
+	}
+
+	//multiply it by a fraction
+	//mega scuffed
+	multiply(factor) {
+
+		let tmp = 0;
+
+		if (typeof factor !== "number") {
+			factor.unmix();
+			factor = factor.numerator;
+			tmp = factor.denominator;
+		}
+			
+		let wasMixed = this.isMixed();
+		
+		this.wholes *= factor;
+		this.numerator *= factor;
+
+		if (tmp) {
+			this.wholes /= tmp;
+			this.denominator *= tmp;
+		}
+		
+		if (wasMixed) this.mix();
+	}
+
+	//divide it by a fraction
+	divide(divisor) {
+
+		if (typeof divisor === "number") {
+			if (this.isMixed()) this.wholes /= divisor;
+			this.denominator *= divisor;
+			return;
+		}
+
+		let tmp = 0;
+
+		divisor.unmix();
+		divisor = divisor.denominator;
+		tmp = divisor.numerator;
+			
+		let wasMixed = this.isMixed();
+		
+		this.wholes *= divisor;
+		this.numerator *= divisor;
+
+		if (tmp) {
+			this.wholes /= tmp;
+			this.denominator *= tmp;
+		}
+		
+		if (wasMixed) this.mix();
+	}
 }
 
 module.exports = {
